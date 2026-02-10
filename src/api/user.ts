@@ -1,7 +1,8 @@
 import { http } from "@/utils/http";
 
 export type UserResult = {
-  success: boolean;
+  code: number;
+  message: string;
   data: {
     /** 头像 */
     avatar: string;
@@ -23,7 +24,8 @@ export type UserResult = {
 };
 
 export type RefreshTokenResult = {
-  success: boolean;
+  code: number;
+  message: string;
   data: {
     /** `token` */
     accessToken: string;

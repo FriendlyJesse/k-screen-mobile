@@ -153,7 +153,7 @@ declare global {
       sidebarStatus?: boolean;
       epThemeColor?: string;
       themeColor?: string;
-      overallStyle?: string;
+      themeMode?: string;
     };
     configure: {
       grey?: boolean;
