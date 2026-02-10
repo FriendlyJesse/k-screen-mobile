@@ -1,8 +1,10 @@
 <script setup lang="ts">
-import { ref } from "vue"
+import { ref, onMounted, nextTick } from "vue"
 // https://plus-pro-components.com/components/steps-form.html
 import "plus-pro-components/es/components/steps-form/style/css"
 import { PlusStepsForm } from "plus-pro-components"
+
+const stepsFormRef = ref<InstanceType<typeof PlusStepsForm>>()
 
 const stepForm = ref([
   {
@@ -190,14 +192,68 @@ const next = (actives: number, values: any) => {
   active.value = actives
   console.log(active, values, stepForm.value)
 }
+
+/**
+ * 点击步骤头部跳转到对应步骤
+ * PlusStepsForm 底层使用 ElSteps/ElStep，不支持原生点击跳转，
+ * 这里通过事件代理监听 .el-step__head 的点击事件来实现。
+ */
+onMounted(() => {
+  nextTick(() => {
+    const el = stepsFormRef.value?.$el as HTMLElement | undefined
+    if (!el) return
+
+    el.addEventListener("click", (e: MouseEvent) => {
+      const target = e.target as HTMLElement
+      // 向上查找最近的 .el-step 元素
+      const stepEl = target.closest(".el-step") as HTMLElement | null
+      if (!stepEl) return
+
+      // 只在点击步骤头部区域时跳转（标题、图标、描述）
+      const headEl = target.closest(
+        ".el-step__head, .el-step__title, .el-step__description"
+      )
+      if (!headEl) return
+
+      // 获取该 step 在兄弟节点中的索引
+      const stepsContainer = stepEl.parentElement
+      if (!stepsContainer) return
+      const steps = Array.from(
+        stepsContainer.querySelectorAll(":scope > .el-step")
+      )
+      const index = steps.indexOf(stepEl)
+      if (index !== -1) {
+        active.value = index + 1 // active 从 1 开始
+      }
+    })
+  })
+})
 </script>
 
 <template>
   <PlusStepsForm
+    ref="stepsFormRef"
     v-model="active"
-    class="w-[380px] m-auto"
+    class="w-[380px] m-auto clickable-steps"
     :data="stepForm as any"
     align-center
     @next="next"
   />
 </template>
+
+<style scoped>
+/* 让步骤头部看起来可点击 */
+.clickable-steps :deep(.el-step__head),
+.clickable-steps :deep(.el-step__title),
+.clickable-steps :deep(.el-step__description) {
+  cursor: pointer;
+}
+
+.clickable-steps :deep(.el-step__head:hover) {
+  color: var(--el-color-primary);
+}
+
+.clickable-steps :deep(.el-step__title:hover) {
+  color: var(--el-color-primary);
+}
+</style>
