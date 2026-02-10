@@ -96,12 +96,12 @@ function onBack() {
       </el-form-item>
     </Motion>
 
-    <Motion :delay="200">
+    <!-- <Motion :delay="200">
       <el-form-item>
         <el-button class="w-full" size="default" @click="onBack">
           {{ t("login.pureBack") }}
         </el-button>
       </el-form-item>
-    </Motion>
+    </Motion> -->
   </el-form>
 </template>

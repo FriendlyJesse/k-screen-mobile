@@ -131,7 +131,7 @@ watch(loginDay, value => {
         @change="dataThemeChange"
       />
       <!-- 国际化 -->
-      <el-dropdown trigger="click">
+      <!-- <el-dropdown trigger="click">
         <globalization
           class="hover:text-primary hover:bg-[transparent]! w-[20px] h-[20px] ml-1.5 cursor-pointer outline-hidden duration-300"
         />
@@ -161,7 +161,7 @@ watch(loginDay, value => {
             </el-dropdown-item>
           </el-dropdown-menu>
         </template>
-      </el-dropdown>
+      </el-dropdown> -->
     </div>
     <div class="login-container">
       <div class="img">
