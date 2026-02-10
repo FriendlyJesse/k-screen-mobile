@@ -10,7 +10,7 @@ const stepForm = ref([
     form: {
       labelPosition: "top",
       style: {
-        width: "400px",
+        width: "300px",
         margin: "40px auto"
       },
       modelValue: {},
@@ -66,7 +66,7 @@ const stepForm = ref([
     form: {
       labelPosition: "top",
       style: {
-        width: "400px",
+        width: "300px",
         margin: "40px auto"
       },
       labelWidth: "100",
@@ -116,7 +116,7 @@ const stepForm = ref([
     form: {
       labelPosition: "top",
       style: {
-        width: "400px",
+        width: "300px",
         margin: "40px auto"
       },
       modelValue: {},
@@ -195,8 +195,7 @@ const next = (actives: number, values: any) => {
 <template>
   <PlusStepsForm
     v-model="active"
-    simple
-    class="w-[800px] m-auto"
+    class="w-[380px] m-auto"
     :data="stepForm as any"
     align-center
     @next="next"

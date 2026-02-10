@@ -26,7 +26,7 @@ export default {
       name: "Steps",
       component: () => import("@/views/list/steps.vue"),
       meta: {
-        title: "步骤条",
+        title: "表单",
         showLink: VITE_HIDE_HOME === "true" ? false : true
       }
     }
