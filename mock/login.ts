@@ -1,5 +1,5 @@
 // 根据角色动态生成路由
-import { defineFakeRoute } from "vite-plugin-fake-server/client";
+import { defineFakeRoute } from "vite-plugin-fake-server/client"
 
 export default defineFakeRoute([
   {
@@ -8,7 +8,8 @@ export default defineFakeRoute([
     response: ({ body }) => {
       if (body.username === "admin") {
         return {
-          success: true,
+          code: 0,
+          message: "操作成功",
           data: {
             avatar: "https://avatars.githubusercontent.com/u/44761321",
             username: "admin",
@@ -21,10 +22,11 @@ export default defineFakeRoute([
             refreshToken: "eyJhbGciOiJIUzUxMiJ9.adminRefresh",
             expires: "2030/10/30 00:00:00"
           }
-        };
+        }
       } else {
         return {
-          success: true,
+          code: 0,
+          message: "操作成功",
           data: {
             avatar: "https://avatars.githubusercontent.com/u/52823142",
             username: "common",
@@ -35,8 +37,8 @@ export default defineFakeRoute([
             refreshToken: "eyJhbGciOiJIUzUxMiJ9.commonRefresh",
             expires: "2030/10/30 00:00:00"
           }
-        };
+        }
       }
     }
   }
-]);
+])

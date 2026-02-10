@@ -1,4 +1,4 @@
-import { $t } from "@/plugins/i18n";
+import { $t } from "@/plugins/i18n"
 
 const operates = [
   {
@@ -10,7 +10,7 @@ const operates = [
   {
     title: $t("login.pureRegister")
   }
-];
+]
 
 const thirdParty = [
   {
@@ -29,6 +29,6 @@ const thirdParty = [
     title: $t("login.pureWeiBoLogin"),
     icon: "weibo"
   }
-];
+]
 
-export { operates, thirdParty };
+export { operates, thirdParty }

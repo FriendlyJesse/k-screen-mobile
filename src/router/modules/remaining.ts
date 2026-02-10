@@ -1,4 +1,4 @@
-const Layout = () => import("@/layout/index.vue");
+const Layout = () => import("@/layout/index.vue")
 
 export default [
   {
@@ -45,4 +45,4 @@ export default [
       }
     ]
   }
-] satisfies Array<RouteConfigsTable>;
+] satisfies Array<RouteConfigsTable>

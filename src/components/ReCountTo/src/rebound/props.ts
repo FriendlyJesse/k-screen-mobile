@@ -1,5 +1,5 @@
-import type { PropType } from "vue";
-import propTypes from "@/utils/propTypes";
+import type { PropType } from "vue"
+import propTypes from "@/utils/propTypes"
 
 export const reboundProps = {
   delay: propTypes.number.def(1),
@@ -9,7 +9,7 @@ export const reboundProps = {
     required: false,
     default: 0,
     validator(value: number) {
-      return value < 10 && value >= 0 && Number.isInteger(value);
+      return value < 10 && value >= 0 && Number.isInteger(value)
     }
   }
-};
+}

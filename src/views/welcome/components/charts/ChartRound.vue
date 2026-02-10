@@ -1,16 +1,16 @@
 <script setup lang="ts">
-import { ref, computed } from "vue";
-import { useDark, useECharts } from "@pureadmin/utils";
+import { ref, computed } from "vue"
+import { useDark, useECharts } from "@pureadmin/utils"
 
-const { isDark } = useDark();
+const { isDark } = useDark()
 
-const theme = computed(() => (isDark.value ? "dark" : "light"));
+const theme = computed(() => (isDark.value ? "dark" : "light"))
 
-const chartRef = ref();
+const chartRef = ref()
 const { setOptions } = useECharts(chartRef, {
   theme,
   renderer: "svg"
-});
+})
 
 setOptions({
   container: ".line-card",
@@ -65,7 +65,7 @@ setOptions({
       }
     }
   ]
-});
+})
 </script>
 
 <template>

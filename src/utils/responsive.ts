@@ -1,11 +1,11 @@
 // 响应式storage
-import type { App } from "vue";
-import Storage from "responsive-storage";
-import { routerArrays } from "@/layout/types";
-import { responsiveStorageNameSpace } from "@/config";
+import type { App } from "vue"
+import Storage from "responsive-storage"
+import { routerArrays } from "@/layout/types"
+import { responsiveStorageNameSpace } from "@/config"
 
 export const injectResponsiveStorage = (app: App, config: PlatformConfigs) => {
-  const nameSpace = responsiveStorageNameSpace();
+  const nameSpace = responsiveStorageNameSpace()
   const configObj = Object.assign(
     {
       // layout模式以及主题
@@ -36,7 +36,7 @@ export const injectResponsiveStorage = (app: App, config: PlatformConfigs) => {
           tags: Storage.getData("tags", nameSpace) ?? routerArrays
         }
       : {}
-  );
+  )
 
-  app.use(Storage, { nameSpace, memory: configObj });
-};
+  app.use(Storage, { nameSpace, memory: configObj })
+}

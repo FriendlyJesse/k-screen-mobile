@@ -1,12 +1,12 @@
-import "./index.css";
-import { type Component, h, defineComponent } from "vue";
+import "./index.css"
+import { type Component, h, defineComponent } from "vue"
 
 export interface attrsType {
-  width?: string;
-  height?: string;
-  borderRadius?: number | string;
-  background?: string;
-  scale?: number | string;
+  width?: string
+  height?: string
+  borderRadius?: number | string
+  background?: string
+  scale?: number | string
 }
 
 /**
@@ -38,7 +38,7 @@ export function useRenderFlicker(attrs?: attrsType): Component {
         {
           default: () => []
         }
-      );
+      )
     }
-  });
+  })
 }

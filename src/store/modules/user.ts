@@ -1,4 +1,4 @@
-import { defineStore } from "pinia";
+import { defineStore } from "pinia"
 import {
   type userType,
   store,
@@ -6,15 +6,15 @@ import {
   resetRouter,
   routerArrays,
   storageLocal
-} from "../utils";
+} from "../utils"
 import {
   type UserResult,
   type RefreshTokenResult,
   getLogin,
   refreshTokenApi
-} from "@/api/user";
-import { useMultiTagsStoreHook } from "./multiTags";
-import { type DataInfo, setToken, removeToken, userKey } from "@/utils/auth";
+} from "@/api/user"
+import { useMultiTagsStoreHook } from "./multiTags"
+import { type DataInfo, setToken, removeToken, userKey } from "@/utils/auth"
 
 export const useUserStore = defineStore("pure-user", {
   state: (): userType => ({
@@ -41,39 +41,39 @@ export const useUserStore = defineStore("pure-user", {
   actions: {
     /** 存储头像 */
     SET_AVATAR(avatar: string) {
-      this.avatar = avatar;
+      this.avatar = avatar
     },
     /** 存储用户名 */
     SET_USERNAME(username: string) {
-      this.username = username;
+      this.username = username
     },
     /** 存储昵称 */
     SET_NICKNAME(nickname: string) {
-      this.nickname = nickname;
+      this.nickname = nickname
     },
     /** 存储角色 */
     SET_ROLES(roles: Array<string>) {
-      this.roles = roles;
+      this.roles = roles
     },
     /** 存储按钮级别权限 */
     SET_PERMS(permissions: Array<string>) {
-      this.permissions = permissions;
+      this.permissions = permissions
     },
     /** 存储前端生成的验证码 */
     SET_VERIFYCODE(verifyCode: string) {
-      this.verifyCode = verifyCode;
+      this.verifyCode = verifyCode
     },
     /** 存储登录页面显示哪个组件 */
     SET_CURRENTPAGE(value: number) {
-      this.currentPage = value;
+      this.currentPage = value
     },
     /** 存储是否勾选了登录页的免登录 */
     SET_ISREMEMBERED(bool: boolean) {
-      this.isRemembered = bool;
+      this.isRemembered = bool
     },
     /** 设置登录页的免登录存储几天 */
     SET_LOGINDAY(value: number) {
-      this.loginDay = Number(value);
+      this.loginDay = Number(value)
     },
     /** 登入 */
     async loginByUsername(data) {
@@ -81,26 +81,42 @@ export const useUserStore = defineStore("pure-user", {
         getLogin(data)
           .then(data => {
             if (data.code === 0) {
-              setToken(data.data);
-              resolve(data);
+              setToken(data.data)
+              resolve(data)
             } else {
-              reject(data.message);
+              reject(data.message)
             }
           })
           .catch(error => {
-            reject(error);
-          });
-      });
+            reject(error)
+          })
+      })
+    },
+    async loginByPhone(data) {
+      return new Promise<UserResult>((resolve, reject) => {
+        getLogin(data)
+          .then(data => {
+            if (data.code === 0) {
+              setToken(data.data)
+              resolve(data)
+            } else {
+              reject(data.message)
+            }
+          })
+          .catch(error => {
+            reject(error)
+          })
+      })
     },
     /** 前端登出（不调用接口） */
     logOut() {
-      this.username = "";
-      this.roles = [];
-      this.permissions = [];
-      removeToken();
-      useMultiTagsStoreHook().handleTags("equal", [...routerArrays]);
-      resetRouter();
-      router.push("/login");
+      this.username = ""
+      this.roles = []
+      this.permissions = []
+      removeToken()
+      useMultiTagsStoreHook().handleTags("equal", [...routerArrays])
+      resetRouter()
+      router.push("/login")
     },
     /** 刷新`token` */
     async handRefreshToken(data) {
@@ -108,20 +124,20 @@ export const useUserStore = defineStore("pure-user", {
         refreshTokenApi(data)
           .then(data => {
             if (data.code === 0) {
-              setToken(data.data);
-              resolve(data);
+              setToken(data.data)
+              resolve(data)
             } else {
-              reject(data.message);
+              reject(data.message)
             }
           })
           .catch(error => {
-            reject(error);
-          });
-      });
+            reject(error)
+          })
+      })
     }
   }
-});
+})
 
 export function useUserStoreHook() {
-  return useUserStore(store);
+  return useUserStore(store)
 }

@@ -1,21 +1,21 @@
 <script setup lang="ts">
-import { ref, markRaw } from "vue";
-import ReCol from "@/components/ReCol";
-import { useDark, randomGradient } from "./utils";
-import WelcomeTable from "./components/table/index.vue";
-import { ReNormalCountTo } from "@/components/ReCountTo";
-import { useRenderFlicker } from "@/components/ReFlicker";
-import { ChartBar, ChartLine, ChartRound } from "./components/charts";
-import Segmented, { type OptionsType } from "@/components/ReSegmented";
-import { chartData, barChartData, progressData, latestNewsData } from "./data";
+import { ref, markRaw } from "vue"
+import ReCol from "@/components/ReCol"
+import { useDark, randomGradient } from "./utils"
+import WelcomeTable from "./components/table/index.vue"
+import { ReNormalCountTo } from "@/components/ReCountTo"
+import { useRenderFlicker } from "@/components/ReFlicker"
+import { ChartBar, ChartLine, ChartRound } from "./components/charts"
+import Segmented, { type OptionsType } from "@/components/ReSegmented"
+import { chartData, barChartData, progressData, latestNewsData } from "./data"
 
 defineOptions({
   name: "Welcome"
-});
+})
 
-const { isDark } = useDark();
+const { isDark } = useDark()
 
-let curWeek = ref(1); // 0上周、1本周
+let curWeek = ref(1) // 0上周、1本周
 const optionsBasis: Array<OptionsType> = [
   {
     label: "上周"
@@ -23,7 +23,7 @@ const optionsBasis: Array<OptionsType> = [
   {
     label: "本周"
   }
-];
+]
 </script>
 
 <template>

@@ -1,12 +1,12 @@
 <script setup lang="ts">
-import { getConfig } from "@/config";
-import { posix } from "path-browserify";
-import { menuType } from "@/layout/types";
-import { ReText } from "@/components/ReText";
-import { useNav } from "@/layout/hooks/useNav";
-import SidebarLinkItem from "./SidebarLinkItem.vue";
-import SidebarExtraIcon from "./SidebarExtraIcon.vue";
-import { useRenderIcon } from "@/components/ReIcon/src/hooks";
+import { getConfig } from "@/config"
+import { posix } from "path-browserify"
+import { menuType } from "@/layout/types"
+import { ReText } from "@/components/ReText"
+import { useNav } from "@/layout/hooks/useNav"
+import SidebarLinkItem from "./SidebarLinkItem.vue"
+import SidebarExtraIcon from "./SidebarExtraIcon.vue"
+import { useRenderIcon } from "@/components/ReIcon/src/hooks"
 import {
   type PropType,
   type CSSProperties,
@@ -14,15 +14,15 @@ import {
   toRaw,
   computed,
   useAttrs
-} from "vue";
+} from "vue"
 
-import ArrowUp from "~icons/ep/arrow-up-bold";
-import EpArrowDown from "~icons/ep/arrow-down-bold";
-import ArrowLeft from "~icons/ep/arrow-left-bold";
-import ArrowRight from "~icons/ep/arrow-right-bold";
+import ArrowUp from "~icons/ep/arrow-up-bold"
+import EpArrowDown from "~icons/ep/arrow-down-bold"
+import ArrowLeft from "~icons/ep/arrow-left-bold"
+import ArrowRight from "~icons/ep/arrow-right-bold"
 
-const attrs = useAttrs();
-const { layout, isCollapse, tooltipEffect, getDivStyle } = useNav();
+const attrs = useAttrs()
+const { layout, isCollapse, tooltipEffect, getDivStyle } = useNav()
 
 const props = defineProps({
   item: {
@@ -36,15 +36,15 @@ const props = defineProps({
     type: String,
     default: ""
   }
-});
+})
 
 const getNoDropdownStyle = computed((): CSSProperties => {
   return {
     width: "100%",
     display: "flex",
     alignItems: "center"
-  };
-});
+  }
+})
 
 const getSubMenuIconStyle = computed((): CSSProperties => {
   return {
@@ -57,12 +57,12 @@ const getSubMenuIconStyle = computed((): CSSProperties => {
         : isCollapse.value
           ? "0 auto"
           : "0 5px 0 0"
-  };
-});
+  }
+})
 
 const textClass = computed(() => {
-  const item = props.item;
-  const baseClass = "w-full! text-inherit!";
+  const item = props.item
+  const baseClass = "w-full! text-inherit!"
   if (
     layout.value !== "horizontal" &&
     isCollapse.value &&
@@ -70,50 +70,50 @@ const textClass = computed(() => {
     ((layout.value === "vertical" && item.parentId === null) ||
       (layout.value === "mix" && item.pathList.length === 2))
   ) {
-    return `${baseClass} min-w-[54px]! text-center! px-3!`;
+    return `${baseClass} min-w-[54px]! text-center! px-3!`
   }
-  return baseClass;
-});
+  return baseClass
+})
 
 const expandCloseIcon = computed(() => {
-  if (!getConfig()?.MenuArrowIconNoTransition) return "";
+  if (!getConfig()?.MenuArrowIconNoTransition) return ""
   return {
     "expand-close-icon": useRenderIcon(EpArrowDown),
     "expand-open-icon": useRenderIcon(ArrowUp),
     "collapse-close-icon": useRenderIcon(ArrowRight),
     "collapse-open-icon": useRenderIcon(ArrowLeft)
-  };
-});
+  }
+})
 
-const onlyOneChild: menuType = ref(null);
+const onlyOneChild: menuType = ref(null)
 
 function hasOneShowingChild(children: menuType[] = [], parent: menuType) {
   const showingChildren = children.filter((item: any) => {
-    onlyOneChild.value = item;
-    return true;
-  });
+    onlyOneChild.value = item
+    return true
+  })
 
   if (showingChildren[0]?.meta?.showParent) {
-    return false;
+    return false
   }
 
   if (showingChildren.length === 1) {
-    return true;
+    return true
   }
 
   if (showingChildren.length === 0) {
-    onlyOneChild.value = { ...parent, path: "", noShowingChildren: true };
-    return true;
+    onlyOneChild.value = { ...parent, path: "", noShowingChildren: true }
+    return true
   }
-  return false;
+  return false
 }
 
 function resolvePath(routePath) {
-  const httpReg = /^http(s?):\/\//;
+  const httpReg = /^http(s?):\/\//
   if (httpReg.test(routePath) || httpReg.test(props.basePath)) {
-    return routePath || props.basePath;
+    return routePath || props.basePath
   } else {
-    return posix.resolve(props.basePath, routePath);
+    return posix.resolve(props.basePath, routePath)
   }
 }
 </script>

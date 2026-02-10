@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import { type PropType, ref, computed } from "vue";
-import { useDark, useECharts } from "@pureadmin/utils";
+import { type PropType, ref, computed } from "vue"
+import { useDark, useECharts } from "@pureadmin/utils"
 
 const props = defineProps({
   data: {
@@ -11,17 +11,17 @@ const props = defineProps({
     type: String,
     default: "#41b6ff"
   }
-});
+})
 
-const { isDark } = useDark();
+const { isDark } = useDark()
 
-const theme = computed(() => (isDark.value ? "dark" : "light"));
+const theme = computed(() => (isDark.value ? "dark" : "light"))
 
-const chartRef = ref();
+const chartRef = ref()
 const { setOptions } = useECharts(chartRef, {
   theme,
   renderer: "svg"
-});
+})
 
 setOptions({
   container: ".line-card",
@@ -54,7 +54,7 @@ setOptions({
       }
     }
   ]
-});
+})
 </script>
 
 <template>

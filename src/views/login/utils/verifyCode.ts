@@ -1,10 +1,10 @@
-import type { FormInstance, FormItemProp } from "element-plus";
-import { clone } from "@pureadmin/utils";
-import { ref } from "vue";
+import type { FormInstance, FormItemProp } from "element-plus"
+import { clone } from "@pureadmin/utils"
+import { ref } from "vue"
 
-const isDisabled = ref(false);
-const timer = ref(null);
-const text = ref("");
+const isDisabled = ref(false)
+const timer = ref(null)
+const text = ref("")
 
 export const useVerifyCode = () => {
   const start = async (
@@ -12,33 +12,33 @@ export const useVerifyCode = () => {
     props: FormItemProp,
     time = 60
   ) => {
-    if (!formEl) return;
-    const initTime = clone(time, true);
+    if (!formEl) return
+    const initTime = clone(time, true)
     await formEl.validateField(props, isValid => {
       if (isValid) {
-        clearInterval(timer.value);
-        isDisabled.value = true;
-        text.value = `${time}`;
+        clearInterval(timer.value)
+        isDisabled.value = true
+        text.value = `${time}`
         timer.value = setInterval(() => {
           if (time > 0) {
-            time -= 1;
-            text.value = `${time}`;
+            time -= 1
+            text.value = `${time}`
           } else {
-            text.value = "";
-            isDisabled.value = false;
-            clearInterval(timer.value);
-            time = initTime;
+            text.value = ""
+            isDisabled.value = false
+            clearInterval(timer.value)
+            time = initTime
           }
-        }, 1000);
+        }, 1000)
       }
-    });
-  };
+    })
+  }
 
   const end = () => {
-    text.value = "";
-    isDisabled.value = false;
-    clearInterval(timer.value);
-  };
+    text.value = ""
+    isDisabled.value = false
+    clearInterval(timer.value)
+  }
 
   return {
     isDisabled,
@@ -46,5 +46,5 @@ export const useVerifyCode = () => {
     text,
     start,
     end
-  };
-};
+  }
+}

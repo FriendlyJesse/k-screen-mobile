@@ -1,14 +1,14 @@
-import { tableData } from "../../data";
-import { delay } from "@pureadmin/utils";
-import { ref, onMounted, reactive } from "vue";
-import type { PaginationProps } from "@pureadmin/table";
-import ThumbUp from "~icons/ri/thumb-up-line";
-import Hearts from "~icons/ri/hearts-line";
-import Empty from "./empty.svg?component";
+import { tableData } from "../../data"
+import { delay } from "@pureadmin/utils"
+import { ref, onMounted, reactive } from "vue"
+import type { PaginationProps } from "@pureadmin/table"
+import ThumbUp from "~icons/ri/thumb-up-line"
+import Hearts from "~icons/ri/hearts-line"
+import Empty from "./empty.svg?component"
 
 export function useColumns() {
-  const dataList = ref([]);
-  const loading = ref(true);
+  const dataList = ref([])
+  const loading = ref(true)
   const columns: TableColumnList = [
     {
       sortable: true,
@@ -28,7 +28,7 @@ export function useColumns() {
       filterMethod: (value, { requiredNumber }) => {
         return value === "more"
           ? requiredNumber >= 16000
-          : requiredNumber < 16000;
+          : requiredNumber < 16000
       }
     },
     {
@@ -68,7 +68,7 @@ export function useColumns() {
       fixed: "right",
       slot: "operation"
     }
-  ];
+  ]
 
   /** 分页配置 */
   const pagination = reactive<PaginationProps>({
@@ -77,21 +77,21 @@ export function useColumns() {
     layout: "prev, pager, next",
     total: 0,
     align: "center"
-  });
+  })
 
   function onCurrentChange(page: number) {
-    console.log("onCurrentChange", page);
-    loading.value = true;
+    console.log("onCurrentChange", page)
+    loading.value = true
     delay(300).then(() => {
-      loading.value = false;
-    });
+      loading.value = false
+    })
   }
 
   onMounted(() => {
-    dataList.value = tableData;
-    pagination.total = dataList.value.length;
-    loading.value = false;
-  });
+    dataList.value = tableData
+    pagination.total = dataList.value.length
+    loading.value = false
+  })
 
   return {
     Empty,
@@ -100,5 +100,5 @@ export function useColumns() {
     dataList,
     pagination,
     onCurrentChange
-  };
+  }
 }

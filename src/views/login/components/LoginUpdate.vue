@@ -1,66 +1,64 @@
 <script setup lang="ts">
-import { useI18n } from "vue-i18n";
-import { ref, reactive } from "vue";
-import Motion from "../utils/motion";
-import { message } from "@/utils/message";
-import { updateRules } from "../utils/rule";
-import type { FormInstance } from "element-plus";
-import { useVerifyCode } from "../utils/verifyCode";
-import { $t, transformI18n } from "@/plugins/i18n";
-import { useUserStoreHook } from "@/store/modules/user";
-import { useRenderIcon } from "@/components/ReIcon/src/hooks";
-import Lock from "~icons/ri/lock-fill";
-import Iphone from "~icons/ep/iphone";
-import Keyhole from "~icons/ri/shield-keyhole-line";
+import { useI18n } from "vue-i18n"
+import { ref, reactive } from "vue"
+import Motion from "../utils/motion"
+import { message } from "@/utils/message"
+import { updateRules } from "../utils/rule"
+import type { FormInstance } from "element-plus"
+import { useVerifyCode } from "../utils/verifyCode"
+import { $t, transformI18n } from "@/plugins/i18n"
+import { useUserStoreHook } from "@/store/modules/user"
+import { useRenderIcon } from "@/components/ReIcon/src/hooks"
+import Lock from "~icons/ri/lock-fill"
+import Iphone from "~icons/ep/iphone"
+import Keyhole from "~icons/ri/shield-keyhole-line"
 
-const { t } = useI18n();
-const loading = ref(false);
+const { t } = useI18n()
+const loading = ref(false)
 const ruleForm = reactive({
   phone: "",
   verifyCode: "",
   password: "",
   repeatPassword: ""
-});
-const ruleFormRef = ref<FormInstance>();
-const { isDisabled, text } = useVerifyCode();
+})
+const ruleFormRef = ref<FormInstance>()
+const { isDisabled, text } = useVerifyCode()
 const repeatPasswordRule = [
   {
     validator: (rule, value, callback) => {
       if (value === "") {
-        callback(new Error(transformI18n($t("login.purePassWordSureReg"))));
+        callback(new Error(transformI18n($t("login.purePassWordSureReg"))))
       } else if (ruleForm.password !== value) {
-        callback(
-          new Error(transformI18n($t("login.purePassWordDifferentReg")))
-        );
+        callback(new Error(transformI18n($t("login.purePassWordDifferentReg"))))
       } else {
-        callback();
+        callback()
       }
     },
     trigger: "blur"
   }
-];
+]
 
 const onUpdate = async (formEl: FormInstance | undefined) => {
-  loading.value = true;
-  if (!formEl) return;
+  loading.value = true
+  if (!formEl) return
   await formEl.validate(valid => {
     if (valid) {
       // 模拟请求，需根据实际开发进行修改
       setTimeout(() => {
         message(transformI18n($t("login.purePassWordUpdateReg")), {
           type: "success"
-        });
-        loading.value = false;
-      }, 2000);
+        })
+        loading.value = false
+      }, 2000)
     } else {
-      loading.value = false;
+      loading.value = false
     }
-  });
-};
+  })
+}
 
 function onBack() {
-  useVerifyCode().end();
-  useUserStoreHook().SET_CURRENTPAGE(0);
+  useVerifyCode().end()
+  useUserStoreHook().SET_CURRENTPAGE(0)
 }
 </script>
 

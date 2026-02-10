@@ -1,24 +1,24 @@
-import "./rebound.css";
+import "./rebound.css"
 import {
   ref,
   unref,
   onBeforeMount,
   defineComponent,
   onBeforeUnmount
-} from "vue";
-import { reboundProps } from "./props";
+} from "vue"
+import { reboundProps } from "./props"
 
 export default defineComponent({
   name: "ReboundCountTo",
   props: reboundProps,
   setup(props) {
-    const ulRef = ref();
-    const timer = ref(null);
+    const ulRef = ref()
+    const timer = ref(null)
 
     onBeforeMount(() => {
-      const ua = navigator.userAgent.toLowerCase();
-      const testUA = regexp => regexp.test(ua);
-      const isSafari = testUA(/safari/g) && !testUA(/chrome/g);
+      const ua = navigator.userAgent.toLowerCase()
+      const testUA = regexp => regexp.test(ua)
+      const isSafari = testUA(/safari/g) && !testUA(/chrome/g)
 
       // Safari浏览器的兼容代码
       isSafari &&
@@ -29,13 +29,13 @@ export default defineComponent({
         animation: none;
         transform: translateY(calc(var(--i) * -9.09%))
       `
-          );
-        }, props.delay * 1000));
-    });
+          )
+        }, props.delay * 1000))
+    })
 
     onBeforeUnmount(() => {
-      clearTimeout(unref(timer));
-    });
+      clearTimeout(unref(timer))
+    })
 
     return () => (
       <>
@@ -67,6 +67,6 @@ export default defineComponent({
           </svg>
         </div>
       </>
-    );
+    )
   }
-});
+})

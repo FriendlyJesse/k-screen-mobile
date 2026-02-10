@@ -1,47 +1,60 @@
 <script setup lang="ts">
-import { useI18n } from "vue-i18n";
-import { ref, reactive } from "vue";
-import Motion from "../utils/motion";
-import { message } from "@/utils/message";
-import { phoneRules } from "../utils/rule";
-import type { FormInstance } from "element-plus";
-import { $t, transformI18n } from "@/plugins/i18n";
-import { useVerifyCode } from "../utils/verifyCode";
-import { useUserStoreHook } from "@/store/modules/user";
-import { useRenderIcon } from "@/components/ReIcon/src/hooks";
-import Iphone from "~icons/ep/iphone";
-import Keyhole from "~icons/ri/shield-keyhole-line";
+import { useI18n } from "vue-i18n"
+import { ref, reactive } from "vue"
+import Motion from "../utils/motion"
+import { message } from "@/utils/message"
+import { phoneRules } from "../utils/rule"
+import type { FormInstance } from "element-plus"
+import { $t, transformI18n } from "@/plugins/i18n"
+import { useVerifyCode } from "../utils/verifyCode"
+import { useUserStoreHook } from "@/store/modules/user"
+import { useRenderIcon } from "@/components/ReIcon/src/hooks"
+import Iphone from "~icons/ep/iphone"
+import Keyhole from "~icons/ri/shield-keyhole-line"
+import { getTopMenu, initRouter } from "@/router/utils"
+import router from "@/router"
 
-const { t } = useI18n();
-const loading = ref(false);
+const { t } = useI18n()
+const loading = ref(false)
 const ruleForm = reactive({
   phone: "",
   verifyCode: ""
-});
-const ruleFormRef = ref<FormInstance>();
-const { isDisabled, text } = useVerifyCode();
+})
+const ruleFormRef = ref<FormInstance>()
+const { isDisabled, text } = useVerifyCode()
 
 const onLogin = async (formEl: FormInstance | undefined) => {
-  loading.value = true;
-  if (!formEl) return;
+  loading.value = true
+  if (!formEl) return
   await formEl.validate(valid => {
     if (valid) {
-      // 模拟登录请求，需根据实际开发进行修改
-      setTimeout(() => {
-        message(transformI18n($t("login.pureLoginSuccess")), {
-          type: "success"
-        });
-        loading.value = false;
-      }, 2000);
-    } else {
-      loading.value = false;
+      loading.value = true
+      useUserStoreHook()
+        .loginByPhone({
+          username: ruleForm.phone,
+          password: ruleForm.verifyCode
+        })
+        .then(async () => {
+          // 获取后端路由
+          await initRouter()
+          router.push(getTopMenu(true).path).then(() => {
+            message(t("login.pureLoginSuccess"), { type: "success" })
+          })
+        })
+        .catch(_err => {
+          console.log(_err)
+          message(t("login.pureLoginFail"), { type: "error" })
+        })
+        .finally(() => {
+          loading.value = false
+        })
     }
-  });
-};
+  })
+}
 
 function onBack() {
-  useVerifyCode().end();
-  useUserStoreHook().SET_CURRENTPAGE(0);
+  useVerifyCode().end()
+  useUserStoreHook().SET_CURRENTPAGE(0)
 }
 </script>
 

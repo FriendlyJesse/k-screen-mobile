@@ -1,10 +1,10 @@
-import { dayjs, cloneDeep, getRandomIntBetween } from "./utils";
-import GroupLine from "~icons/ri/group-line";
-import Question from "~icons/ri/question-answer-line";
-import CheckLine from "~icons/ri/chat-check-line";
-import Smile from "~icons/ri/star-smile-line";
+import { dayjs, cloneDeep, getRandomIntBetween } from "./utils"
+import GroupLine from "~icons/ri/group-line"
+import Question from "~icons/ri/question-answer-line"
+import CheckLine from "~icons/ri/chat-check-line"
+import Smile from "~icons/ri/star-smile-line"
 
-const days = ["周日", "周一", "周二", "周三", "周四", "周五", "周六"];
+const days = ["周日", "周一", "周二", "周三", "周四", "周五", "周六"]
 
 /** 需求人数、提问数量、解决数量、用户满意度 */
 const chartData = [
@@ -48,7 +48,7 @@ const chartData = [
     percent: "+100%",
     data: [100]
   }
-];
+]
 
 /** 分析概览 */
 const barChartData = [
@@ -60,7 +60,7 @@ const barChartData = [
     requireData: [2101, 3280, 4400, 4962, 5752, 6889, 7600],
     questionData: [2116, 3148, 3255, 3788, 4821, 4970, 5390]
   }
-];
+]
 
 /** 解决概率 */
 const progressData = [
@@ -106,7 +106,7 @@ const progressData = [
     duration: 80,
     color: "#26ce83"
   }
-].reverse();
+].reverse()
 
 /** 数据统计 */
 const tableData = Array.from({ length: 30 }).map((_, index) => {
@@ -117,8 +117,8 @@ const tableData = Array.from({ length: 30 }).map((_, index) => {
     resolveNumber: getRandomIntBetween(13500, 17999),
     satisfaction: getRandomIntBetween(95, 100),
     date: dayjs().subtract(index, "day").format("YYYY-MM-DD")
-  };
-});
+  }
+})
 
 /** 最新动态 */
 const latestNewsData = cloneDeep(tableData)
@@ -128,7 +128,7 @@ const latestNewsData = cloneDeep(tableData)
       date: `${dayjs().subtract(index, "day").format("YYYY-MM-DD")} ${
         days[dayjs().subtract(index, "day").day()]
       }`
-    });
-  });
+    })
+  })
 
-export { chartData, barChartData, progressData, tableData, latestNewsData };
+export { chartData, barChartData, progressData, tableData, latestNewsData }

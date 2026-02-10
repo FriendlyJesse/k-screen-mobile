@@ -1,22 +1,22 @@
 <script setup lang="ts">
-import { initRouter } from "@/router/utils";
-import { storageLocal } from "@pureadmin/utils";
-import { type CSSProperties, ref, computed } from "vue";
-import { useUserStoreHook } from "@/store/modules/user";
-import { usePermissionStoreHook } from "@/store/modules/permission";
+import { initRouter } from "@/router/utils"
+import { storageLocal } from "@pureadmin/utils"
+import { type CSSProperties, ref, computed } from "vue"
+import { useUserStoreHook } from "@/store/modules/user"
+import { usePermissionStoreHook } from "@/store/modules/permission"
 
 defineOptions({
   name: "PermissionPage"
-});
+})
 
 const elStyle = computed((): CSSProperties => {
   return {
     width: "85vw",
     justifyContent: "start"
-  };
-});
+  }
+})
 
-const username = ref(useUserStoreHook()?.username);
+const username = ref(useUserStoreHook()?.username)
 
 const options = [
   {
@@ -27,18 +27,18 @@ const options = [
     value: "common",
     label: "普通角色"
   }
-];
+]
 
 function onChange() {
   useUserStoreHook()
     .loginByUsername({ username: username.value, password: "admin123" })
     .then(res => {
       if (res.success) {
-        storageLocal().removeItem("async-routes");
-        usePermissionStoreHook().clearAllCachePage();
-        initRouter();
+        storageLocal().removeItem("async-routes")
+        usePermissionStoreHook().clearAllCachePage()
+        initRouter()
       }
-    });
+    })
 }
 </script>
 

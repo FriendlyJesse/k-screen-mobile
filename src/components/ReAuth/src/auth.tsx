@@ -1,5 +1,5 @@
-import { defineComponent, Fragment } from "vue";
-import { hasAuth } from "@/router/utils";
+import { defineComponent, Fragment } from "vue"
+import { hasAuth } from "@/router/utils"
 
 export default defineComponent({
   name: "Auth",
@@ -11,10 +11,10 @@ export default defineComponent({
   },
   setup(props, { slots }) {
     return () => {
-      if (!slots) return null;
+      if (!slots) return null
       return hasAuth(props.value) ? (
         <Fragment>{slots.default?.()}</Fragment>
-      ) : null;
-    };
+      ) : null
+    }
   }
-});
+})

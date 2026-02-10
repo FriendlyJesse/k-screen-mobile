@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import { useDark, useECharts } from "@pureadmin/utils";
-import { type PropType, ref, computed, watch, nextTick } from "vue";
+import { useDark, useECharts } from "@pureadmin/utils"
+import { type PropType, ref, computed, watch, nextTick } from "vue"
 
 const props = defineProps({
   requireData: {
@@ -11,21 +11,21 @@ const props = defineProps({
     type: Array as PropType<Array<number>>,
     default: () => []
   }
-});
+})
 
-const { isDark } = useDark();
+const { isDark } = useDark()
 
-const theme = computed(() => (isDark.value ? "dark" : "light"));
+const theme = computed(() => (isDark.value ? "dark" : "light"))
 
-const chartRef = ref();
+const chartRef = ref()
 const { setOptions } = useECharts(chartRef, {
   theme
-});
+})
 
 watch(
   () => props,
   async () => {
-    await nextTick(); // 确保DOM更新完成后再执行
+    await nextTick() // 确保DOM更新完成后再执行
     setOptions({
       container: ".bar-card",
       color: ["#41b6ff", "#e85f33"],
@@ -94,13 +94,13 @@ watch(
           data: props.questionData
         }
       ]
-    });
+    })
   },
   {
     deep: true,
     immediate: true
   }
-);
+)
 </script>
 
 <template>

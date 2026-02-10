@@ -1,12 +1,12 @@
-import "./index.css";
-import type { OptionsType } from "./type";
-import { useRenderIcon } from "@/components/ReIcon/src/hooks";
+import "./index.css"
+import type { OptionsType } from "./type"
+import { useRenderIcon } from "@/components/ReIcon/src/hooks"
 import {
   useDark,
   isNumber,
   isFunction,
   useResizeObserver
-} from "@pureadmin/utils";
+} from "@pureadmin/utils"
 import {
   type PropType,
   h,
@@ -16,7 +16,7 @@ import {
   nextTick,
   defineComponent,
   getCurrentInstance
-} from "vue";
+} from "vue"
 
 const props = {
   options: {
@@ -48,88 +48,86 @@ const props = {
     type: Boolean,
     default: false
   }
-};
+}
 
 export default defineComponent({
   name: "ReSegmented",
   props,
   emits: ["change", "update:modelValue"],
   setup(props, { emit }) {
-    const width = ref(0);
-    const translateX = ref(0);
-    const { isDark } = useDark();
-    const initStatus = ref(false);
-    const curMouseActive = ref(-1);
-    const segmentedItembg = ref("");
-    const instance = getCurrentInstance()!;
+    const width = ref(0)
+    const translateX = ref(0)
+    const { isDark } = useDark()
+    const initStatus = ref(false)
+    const curMouseActive = ref(-1)
+    const segmentedItembg = ref("")
+    const instance = getCurrentInstance()!
     const curIndex = isNumber(props.modelValue)
       ? toRef(props, "modelValue")
-      : ref(0);
+      : ref(0)
 
     function handleChange({ option, index }, event: Event) {
-      if (props.disabled || option.disabled) return;
-      event.preventDefault();
+      if (props.disabled || option.disabled) return
+      event.preventDefault()
       isNumber(props.modelValue)
         ? emit("update:modelValue", index)
-        : (curIndex.value = index);
-      segmentedItembg.value = "";
-      emit("change", { index, option });
+        : (curIndex.value = index)
+      segmentedItembg.value = ""
+      emit("change", { index, option })
     }
 
     function handleMouseenter({ option, index }, event: Event) {
-      if (props.disabled) return;
-      event.preventDefault();
-      curMouseActive.value = index;
+      if (props.disabled) return
+      event.preventDefault()
+      curMouseActive.value = index
       if (option.disabled || curIndex.value === index) {
-        segmentedItembg.value = "";
+        segmentedItembg.value = ""
       } else {
-        segmentedItembg.value = isDark.value
-          ? "#1f1f1f"
-          : "rgba(0, 0, 0, 0.06)";
+        segmentedItembg.value = isDark.value ? "#1f1f1f" : "rgba(0, 0, 0, 0.06)"
       }
     }
 
     function handleMouseleave(_, event: Event) {
-      if (props.disabled) return;
-      event.preventDefault();
-      curMouseActive.value = -1;
+      if (props.disabled) return
+      event.preventDefault()
+      curMouseActive.value = -1
     }
 
     function handleInit(index = curIndex.value) {
       nextTick(() => {
-        const curLabelRef = instance?.proxy?.$refs[`labelRef${index}`] as ElRef;
-        if (!curLabelRef) return;
-        width.value = curLabelRef.clientWidth;
-        translateX.value = curLabelRef.offsetLeft;
-        initStatus.value = true;
-      });
+        const curLabelRef = instance?.proxy?.$refs[`labelRef${index}`] as ElRef
+        if (!curLabelRef) return
+        width.value = curLabelRef.clientWidth
+        translateX.value = curLabelRef.offsetLeft
+        initStatus.value = true
+      })
     }
 
     function handleResizeInit() {
       useResizeObserver(".pure-segmented", () => {
         nextTick(() => {
-          handleInit(curIndex.value);
-        });
-      });
+          handleInit(curIndex.value)
+        })
+      })
     }
 
-    (props.block || props.resize) && handleResizeInit();
+    ;(props.block || props.resize) && handleResizeInit()
 
     watch(
       () => curIndex.value,
       index => {
         nextTick(() => {
-          handleInit(index);
-        });
+          handleInit(index)
+        })
       },
       {
         immediate: true
       }
-    );
+    )
 
     watch(() => props.size, handleResizeInit, {
       immediate: true
-    });
+    })
 
     const rendLabel = () => {
       return props.options.map((option, index) => {
@@ -186,9 +184,9 @@ export default defineComponent({
               ) : null}
             </div>
           </label>
-        );
-      });
-    };
+        )
+      })
+    }
 
     return () => (
       <div
@@ -211,6 +209,6 @@ export default defineComponent({
           {rendLabel()}
         </div>
       </div>
-    );
+    )
   }
-});
+})
